@@ -19,12 +19,12 @@ extern "C" {
 
 static CustomizedNet yolo;
 
-struct Object
-{
-  cv::Rect_<float> rect;
-  int label;
-  float prob;
-};
+//struct Object
+//{
+//  cv::Rect_<float> rect;
+//  int label;
+//  float prob;
+//};
 
 JNIEXPORT jboolean JNICALL
 Java_com_tarmac_yolov2Tiny_yolov2Tiny_Init(JNIEnv *env, jobject obj, jstring param, jstring bin) {

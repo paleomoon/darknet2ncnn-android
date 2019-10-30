@@ -17,7 +17,7 @@ set(libs "${CMAKE_SOURCE_DIR}/src/main/jniLibs")
 include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/darknet2ncnn/include
         ${CMAKE_SOURCE_DIR}/src/main/cpp/ncnn/include
         ${CMAKE_SOURCE_DIR}/src/main/cpp/darknet/include
-        ${CMAKE_SOURCE_DIR}/src/main/cpp/darknet2ncnn/src1
+        ${CMAKE_SOURCE_DIR}/src/main/cpp/darknet2ncnn/src
         ${CMAKE_SOURCE_DIR}/src/main/cpp/ncnn/src)
 
 set(CMAKE_STATIC_LINKER_FLAGS "-lm  -pthread -fopenmp -lstdc++")
@@ -32,7 +32,7 @@ file(GLOB_RECURSE darknet_src ${CMAKE_SOURCE_DIR}/src/main/cpp/darknet/src/*.c)
 #file(GLOB_RECURSE  DARKNET2NCNN_SRC ${CMAKE_SOURCE_DIR}/src/main/cpp/darknet2ncnn/src/*.cpp)
 #file(GLOB_RECURSE DARKNET2NCNN_SRC_LAYER ${CMAKE_SOURCE_DIR}/src/main/cpp/darknet2ncnn/src/layer/*.cpp)
 
-set(darknet2ncnn_dir ${CMAKE_SOURCE_DIR}/src/main/cpp/darknet2ncnn/src1)
+set(darknet2ncnn_dir ${CMAKE_SOURCE_DIR}/src/main/cpp/darknet2ncnn/src)
 set(darknet2ncnn_src ${darknet2ncnn_dir}/layer/darknet_activation.cpp
     ${darknet2ncnn_dir}/layer/darknet_shortcut.cpp
     ${darknet2ncnn_dir}/layer/yolov1_detection.cpp

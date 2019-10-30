@@ -10,9 +10,9 @@
 
 #include <stdio.h>
 #include <fstream>
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
+//#include <opencv2/core/core.hpp>
+//#include <opencv2/highgui/highgui.hpp>
+//#include <opencv2/imgproc/imgproc.hpp>
 #include "net.h"
 
 static void print_mat(ncnn::Mat &mat)
@@ -32,60 +32,60 @@ static void print_mat(ncnn::Mat &mat)
   }
 }
 
-static cv::Mat letter_box_image(const cv::Mat &src, int net_w, int net_h)
-{
-  int new_w = src.cols;
-  int new_h = src.rows;
-
-  if (((float)net_w / src.cols) < ((float)net_h / src.rows))
-  {
-    new_w = net_w;
-    new_h = (src.rows * net_w) / src.cols;
-  }
-  else
-  {
-    new_h = net_h;
-    new_w = (src.cols * net_h) / src.rows;
-  }
-
-  cv::Mat dest(net_w, net_h, CV_8UC3, cv::Scalar(128, 128, 128));
-  cv::Mat embed;
-  cv::resize(src, embed, cv::Size(new_w, new_h), 0, 0, cv::INTER_LINEAR);
-  cv::Mat imageROI = dest(cv::Rect((net_w - new_w) / 2, (net_h - new_h) / 2,
-                                   embed.cols, embed.rows));
-  embed.copyTo(imageROI);
-
-  return dest;
-}
-
-static cv::Mat get_input_opencv_mat_from_image(const char *filename, int net_h,
-                                               int net_w)
-{
-  cv::Mat bgr = cv::imread(filename, CV_LOAD_IMAGE_COLOR);
-
-  if (bgr.empty())
-  {
-    fprintf(stderr, "cv::imread %s failed\n", filename);
-    return bgr;
-  }
-
-  cv::Mat letter = letter_box_image(bgr, net_h, net_w);
-  return letter;
-}
-
-static ncnn::Mat get_input_mat_from_image(const char *filename, int net_h,
-                                          int net_w)
-{
-  cv::Mat letter = get_input_opencv_mat_from_image(filename, net_h, net_w);
-
-  ncnn::Mat darknet_input = ncnn::Mat::from_pixels(
-      letter.data, ncnn::Mat::PIXEL_RGB2BGR, net_w, net_h);
-
-  const float norm_vals[3] = {1 / 255.0, 1 / 255.0, 1 / 255.0};
-  darknet_input.substract_mean_normalize(0, norm_vals);
-
-  return darknet_input;
-}
+//static cv::Mat letter_box_image(const cv::Mat &src, int net_w, int net_h)
+//{
+//  int new_w = src.cols;
+//  int new_h = src.rows;
+//
+//  if (((float)net_w / src.cols) < ((float)net_h / src.rows))
+//  {
+//    new_w = net_w;
+//    new_h = (src.rows * net_w) / src.cols;
+//  }
+//  else
+//  {
+//    new_h = net_h;
+//    new_w = (src.cols * net_h) / src.rows;
+//  }
+//
+//  cv::Mat dest(net_w, net_h, CV_8UC3, cv::Scalar(128, 128, 128));
+//  cv::Mat embed;
+//  cv::resize(src, embed, cv::Size(new_w, new_h), 0, 0, cv::INTER_LINEAR);
+//  cv::Mat imageROI = dest(cv::Rect((net_w - new_w) / 2, (net_h - new_h) / 2,
+//                                   embed.cols, embed.rows));
+//  embed.copyTo(imageROI);
+//
+//  return dest;
+//}
+//
+//static cv::Mat get_input_opencv_mat_from_image(const char *filename, int net_h,
+//                                               int net_w)
+//{
+//  cv::Mat bgr = cv::imread(filename, CV_LOAD_IMAGE_COLOR);
+//
+//  if (bgr.empty())
+//  {
+//    fprintf(stderr, "cv::imread %s failed\n", filename);
+//    return bgr;
+//  }
+//
+//  cv::Mat letter = letter_box_image(bgr, net_h, net_w);
+//  return letter;
+//}
+//
+//static ncnn::Mat get_input_mat_from_image(const char *filename, int net_h,
+//                                          int net_w)
+//{
+//  cv::Mat letter = get_input_opencv_mat_from_image(filename, net_h, net_w);
+//
+//  ncnn::Mat darknet_input = ncnn::Mat::from_pixels(
+//      letter.data, ncnn::Mat::PIXEL_RGB2BGR, net_w, net_h);
+//
+//  const float norm_vals[3] = {1 / 255.0, 1 / 255.0, 1 / 255.0};
+//  darknet_input.substract_mean_normalize(0, norm_vals);
+//
+//  return darknet_input;
+//}
 
 static std::string trim(const std::string &str, char value = '\n')
 {
